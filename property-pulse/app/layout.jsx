@@ -1,15 +1,16 @@
 import React from "react";
 import "@/assets/styles/globals.css";
-
+import NavBar from "@/components/Navbar";
 export const metadata = {
-  title: "PropertyPulse | Find the perfect rental",
+  title: "ProperTea | Find the perfect rental",
   description: "Find your dream rental property",
 };
 const MainLayout = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <div>{children}</div>
+        <NavBar />
+        <main>{children}</main>
       </body>
     </html>
   );
