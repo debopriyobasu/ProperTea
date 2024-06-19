@@ -18,7 +18,7 @@ const PropertyPage = () => {
         className="bg-blue-500 p-2 rounded-md"
         onClick={() => route.push("/")}
       >
-        Go Home - {name} - {pathname} - {id}
+        Go Home - {name} - {pathname} - {id} - {name}
       </button>
     </div>
   );
