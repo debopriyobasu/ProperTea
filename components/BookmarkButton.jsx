@@ -13,6 +13,22 @@ const BookmarkButton = ({ property }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
+    checkBookmarkStatus(property._id).then((res) => {
+      if (res.error) {
+        toast.error(res.error);
+      }
+      if (res.isBookmarked) {
+        setIsBookmarked(res.isBookmarked);
+      }
+      setLoading(false);
+    });
+  }, [property._id, userId, checkBookmarkStatus]);
+
   const handleClick = async () => {
     if (!userId) {
       toast.error("You need to be signed in to bookmark a listing");
@@ -26,22 +42,6 @@ const BookmarkButton = ({ property }) => {
       toast.success(res.message);
     });
   };
-
-  useEffect(() => {
-    if (!userId) {
-      setLoading(false);
-      return;
-    }
-    checkBookmarkStatus(property._id).then((res) => {
-      if (res.error) {
-        toast.error(res.error);
-      }
-      if (res.isBookmarked) {
-        setIsBookmarked(res.isBookmarked);
-        setLoading(false);
-      }
-    });
-  }, [property._id, userId, checkBookmarkStatus]);
 
   if (loading) {
     return <p className="text-center">Loading...</p>;

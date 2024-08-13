@@ -1,9 +1,9 @@
 "use server";
 import connectDB from "@/config/database";
-import User from "@/models/User";
+import Message from "@/models/Message";
 import { getSessionUser } from "@/utils/getSessionUser";
 
-async function checkBookmarkStatus(propertyId) {
+async function getUnreadMessageCount(messageId) {
   await connectDB();
   const sessionUser = await getSessionUser();
 
@@ -12,10 +12,10 @@ async function checkBookmarkStatus(propertyId) {
   }
 
   const { userId } = sessionUser;
-
-  const user = await User.findById(userId);
-  let isBookmarked = user.bookmarks.includes(propertyId);
-
-  return { isBookmarked };
+  const count = await Message.countDocuments({
+    recipient: userId,
+    read: false,
+  });
+  return { count };
 }
-export default checkBookmarkStatus;
+export default getUnreadMessageCount;
